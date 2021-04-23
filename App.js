@@ -1,6 +1,13 @@
 import { StatusBar } from "expo-status-bar";
 import React from "react";
-import { ScrollView, StyleSheet, Text, View } from "react-native";
+import {
+  SafeAreaView,
+  FlatList,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
 const names = [
   "Aaran",
   "Aaren",
@@ -2775,20 +2782,35 @@ const names2 = [
   "Joker",
 ];
 
+const namesAsObjects = names.map((item) => {
+  return {
+    name: item,
+  };
+});
+
 export default function App() {
+  const renderItem = ({ item }) => <Text style={styles.text}>{item.name}</Text>;
   return (
-    <ScrollView contentContainerStyle={styles.container}>
-      {names.map((name) => {
-        return <Text>{name}</Text>;
-      })}
-    </ScrollView>
+    <SafeAreaView>
+      <FlatList
+        contentContainerStyle={styles.container}
+        data={namesAsObjects}
+        renderItem={renderItem}
+        keyExtractor={(item) => item.name}
+      />
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
+  text: {
+    padding: 20,
+    margin: 10,
     backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
+    borderBottomColor: "#999",
+    borderBottomWidth: 2,
+  },
+  container: {
+    backgroundColor: "lightblue",
   },
 });
